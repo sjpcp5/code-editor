@@ -2,6 +2,7 @@
 // from within a component
 // use lazy loading to load the component only when the route is
 // accessed
+import React from 'react';
 import { useRoutes } from 'react-router-dom';
 // import { useAuth } from 'auth/AuthProvider';
 // import { useAppDispatch } from 'app/hooks';
@@ -11,7 +12,7 @@ import { useRoutes } from 'react-router-dom';
 // import { setOutput } from 'features/output/outputSlice';
 // import { setFilename } from 'features/filename/filenameSlice';
 import paths from './paths';
-const Home = () => <h1>Home</h1>;
+const Home = React.lazy(() => import('pages/home/Home'));
 const Routes = () => {
   let element = useRoutes([
     { path: paths.home, element: <Home /> },
