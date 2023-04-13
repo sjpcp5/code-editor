@@ -1,4 +1,5 @@
 import { styled } from '@mui/material/styles';
+import ProgrammingLanguagesList from 'components/common/home/programming-list-languages/ProgrammingLanguagesList';
 import Layout from 'components/common/layout/Layout';
 
 const HomeContainer = styled('div')(({ theme }) => ({
@@ -21,6 +22,7 @@ const Home = () => {
     <Layout>
       <HomeContainer>
         <WelcomeMessage> Welcome to the Code Editor App</WelcomeMessage>
+        <ProgrammingLanguagesList />
       </HomeContainer>
     </Layout>
   );
