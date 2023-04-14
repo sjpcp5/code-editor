@@ -3,7 +3,8 @@
 // use lazy loading to load the component only when the route is
 // accessed
 import React from 'react';
-import { useRoutes } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
 // import { useAuth } from 'auth/AuthProvider';
 // import { useAppDispatch } from 'app/hooks';
 // import { setCode } from 'features/editor/editorSlice';
@@ -11,16 +12,24 @@ import { useRoutes } from 'react-router-dom';
 // import { setTheme } from 'features/theme/themeSlice';
 // import { setOutput } from 'features/output/outputSlice';
 // import { setFilename } from 'features/filename/filenameSlice';
+import ProtectedRoute from '../auth/ProtectedRoute';
+import Loader from '../components/common/loading/Loader';
+
 import paths from './paths';
 const Home = React.lazy(() => import('pages/home/Home'));
-const Routes = () => {
-  let element = useRoutes([
-    { path: paths.home, element: <Home /> },
-    { path: paths.codeEditor, element: <h1>Editor</h1> },
-    { path: paths.login, element: <h1>Login</h1> },
-    { path: paths.codeEditorWithId, element: <h1>code editot slice</h1> },
-  ]);
-  return element;
+const CodeEditor = React.lazy(() => import('pages/code-editor/CodeEditor'));
+const Routing = () => {
+  const { isLoading } = useAuth0();
+
+  if (isLoading) {
+    return <Loader />;
+  }
+  return (
+    <Routes>
+      <Route path={paths.home} element={<Home />} />
+      <Route path={paths.codeEditor} element={<ProtectedRoute component={CodeEditor} />} />
+    </Routes>
+  );
 };
 
-export default Routes;
+export default Routing;

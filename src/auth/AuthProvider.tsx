@@ -1,9 +1,15 @@
-import { PropsWithChildren } from 'react';
+// import { PropsWithChildren, ReactPortal } from 'react';
 import { AppState, Auth0Provider } from '@auth0/auth0-react';
 import { useNavigate } from 'react-router-dom';
-import { auth0domain, auth0clientId } from '../config/index';
 
-const AuthProvider = (props: PropsWithChildren<{}>) => {
+interface IAuthProps {
+  domain: string;
+  clientId: string;
+  authorizationParams: { redirect_uri: string };
+  children: JSX.Element;
+}
+
+const AuthProvider = ({ ...props }: IAuthProps): JSX.Element => {
   const navigate = useNavigate();
 
   const onRedirectCallback = (appState?: AppState): void => {
@@ -11,15 +17,8 @@ const AuthProvider = (props: PropsWithChildren<{}>) => {
   };
 
   return (
-    <Auth0Provider
-      domain={auth0domain()}
-      clientId={auth0clientId()}
-      authorizationParams={{
-        redirect_uri: window.location.origin,
-      }}
-      onRedirectCallback={onRedirectCallback}
-    >
-      {props.children}
+    <Auth0Provider onRedirectCallback={onRedirectCallback} {...props}>
+      {props?.children}
     </Auth0Provider>
   );
 };
