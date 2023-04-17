@@ -5,6 +5,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import SignInButton from './SignInButton';
 import SignOutButton from './SignOutButton';
 import CodeEditorButton from './CodeEditorButton';
+import DarkModeSwitch from './DarkModeSwitch';
 import paths from 'routes/paths';
 
 const StyledLink = styled(Link)(({ theme }) => ({
@@ -19,6 +20,7 @@ const Header = () => {
       <Toolbar>
         <Typography variant="h6" sx={{ flex: 1 }}>
           <StyledLink to={paths.home}>Online Monaco IDE</StyledLink>
+          <DarkModeSwitch />
           {isAuthenticated ? <AuthButtons /> : <UnauthButtons />}
         </Typography>
       </Toolbar>
